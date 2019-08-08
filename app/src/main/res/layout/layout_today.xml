@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="newsViewModel"
+            type="com.sphinx.dailystorykt.ui.home.news.NewsViewModel" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="5dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:background="?android:attr/selectableItemBackground">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/iv_url"
+                loadUrlImage="@{newsViewModel.imgUrl}"
+                android:layout_width="140dp"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/sample" />
+
+            <TextView
+                android:id="@+id/tv_heading"
+                android:text="@{newsViewModel.heading}"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:padding="2dp"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_url"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Warning over needles in .Warning over needles in strawberries." />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_url"
+                app:layout_constraintTop_toBottomOf="@+id/tv_heading"
+                app:layout_constraintVertical_bias="0.59000003"
+                app:srcCompat="@drawable/ic_edit_pencil" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:text="@{newsViewModel.date}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                app:layout_constraintTop_toBottomOf="@+id/tv_heading"
+                tools:text="15th Sep 2018" />
+
+            <ImageView
+                android:id="@+id/iv_hot"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_heading"
+                app:srcCompat="@drawable/ic_fire" />
+        </android.support.constraint.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
