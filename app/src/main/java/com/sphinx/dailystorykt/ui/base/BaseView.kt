@@ -17,5 +17,5 @@ interface BaseView {
 
 	fun showSoftKeyboard(view: View?)
 
-	fun isNetworkPresent()
+	fun isNetworkPresent(): Boolean
 }

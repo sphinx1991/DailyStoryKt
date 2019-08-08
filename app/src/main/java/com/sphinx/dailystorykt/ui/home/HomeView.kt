@@ -8,9 +8,5 @@ import com.sphinx.dailystorykt.ui.base.BaseView
  */
 interface HomeView : BaseView {
 
-    fun openSomeActivity()
-
-    fun resetTrendingListAdapter(articles: List<NewsResponseModel.ArticleModel>?)
-
-    fun resetTopListAdapter(articles: List<NewsResponseModel.ArticleModel>?)
+    fun openInfoActivity(articleModel: NewsResponseModel.ArticleModel)
 }

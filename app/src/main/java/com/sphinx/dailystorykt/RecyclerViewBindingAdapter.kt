@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 abstract class RecyclerViewBindingAdapter<T : ViewDataBinding> :
 	RecyclerView.Adapter<RecyclerViewBindingAdapter.ViewPlaceHolder<T>>() {
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPlaceHolder<T> {
-		return ViewPlaceHolder(onCreateViewBinding(parent, viewType))
-	}
+	abstract override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPlaceHolder<T>
 
 	abstract fun onCreateViewBinding(parent: ViewGroup, viewType: Int): T
 

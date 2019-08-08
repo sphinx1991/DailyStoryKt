@@ -18,10 +18,10 @@ import org.jetbrains.anko.toast
  * All activities inherit from this activity.
  * Contains utility functions.
  */
-abstract class BaseActivity<T: ViewDataBinding, V: BaseViewModel> : AppCompatActivity(), BaseView, AnkoLogger {
+abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : AppCompatActivity(), BaseView, AnkoLogger {
 
     private lateinit var mViewDataBinding: T
-    private var mViewModel: V ? = null
+    private var mViewModel: V? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         performDependencyInjection()
@@ -29,28 +29,24 @@ abstract class BaseActivity<T: ViewDataBinding, V: BaseViewModel> : AppCompatAct
         // Required for Kitkat and below to load Vector Drawables
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         performDataBinding()
-
     }
 
-    override fun notify(msg: String) {
-        toast(msg)
+    override fun onDestroy() {
+        super.onDestroy()
+        mViewModel?.compositeDisposable?.clear()
     }
 
-    override fun hideSoftKeyboard() {
-        act.hideSoftKeyboard()
-    }
+    override fun notify(msg: String) = toast(msg)
 
-    override fun showSoftKeyboard(view: View?) {
-        act.showSoftKeyBoard(view)
-    }
+    override fun hideSoftKeyboard() = act.hideSoftKeyboard()
 
-    override fun isNetworkPresent() {
-        application.isNetworkConnected()
-    }
+    override fun showSoftKeyboard(view: View?) = act.showSoftKeyBoard(view)
 
-    private fun performDependencyInjection() {
-        AndroidInjection.inject(this)
-    }
+    override fun isNetworkPresent() = application.isNetworkConnected()
+
+    fun getViewDataBinding(): T = mViewDataBinding
+
+    private fun performDependencyInjection() = AndroidInjection.inject(this)
 
     private fun performDataBinding() {
         mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutId())
@@ -59,16 +55,9 @@ abstract class BaseActivity<T: ViewDataBinding, V: BaseViewModel> : AppCompatAct
         mViewDataBinding.executePendingBindings()
     }
 
-    //get binding
-    fun getViewDataBinding(): T {
-        return mViewDataBinding
-    }
-
     abstract fun getLayoutId(): Int
 
-    //get variable from each class
     abstract fun getBindingVariable(): Int
 
-    //get viewmodel of each class
     abstract fun getViewModel(): V
 }

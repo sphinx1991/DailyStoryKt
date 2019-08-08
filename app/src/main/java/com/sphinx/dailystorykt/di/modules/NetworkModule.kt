@@ -15,33 +15,17 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-    companion object {
-        //constants
-        const val url = "url"
-    }
-
     @Provides
     @Singleton
     fun getNewsApi(
         rxJava2CallAdapterFactory: RxJava2CallAdapterFactory,
-        gsonConverterFactory: GsonConverterFactory,
         okHttpClient: OkHttpClient
     ): ApiHelper = Retrofit.Builder()
             .addCallAdapterFactory(rxJava2CallAdapterFactory)
-            .addConverterFactory(gsonConverterFactory)
             .baseUrl(BuildConfig.BASE_URL)
             .client(okHttpClient)
             .build()
             .create(ApiHelper::class.java!!)
-
-//    @Provides
-//    @Singleton
-//    fun gsonConverterFactory(): GsonConverterFactory =
-//        GsonConverterFactory.create(
-//            GsonBuilder().
-//                registerTypeAdapterFactory(AutoValueGsonFactory.create())
-//                .create()
-//        )
 
     @Provides
     @Singleton

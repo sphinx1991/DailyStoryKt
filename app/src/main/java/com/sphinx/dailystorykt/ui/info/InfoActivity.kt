@@ -19,7 +19,7 @@ class InfoActivity : BaseActivity<ActivityInfoBinding, InfoViewModel>(), InfoVie
     private lateinit var mInfoViewModel: InfoViewModel
     private lateinit var mBinding: ActivityInfoBinding
 
-    val articleModel: NewsResponseModel.ArticleModel by lazy {
+    private val articleModel: NewsResponseModel.ArticleModel by lazy {
         intent.getSerializableExtra("article") as NewsResponseModel.ArticleModel
     }
 

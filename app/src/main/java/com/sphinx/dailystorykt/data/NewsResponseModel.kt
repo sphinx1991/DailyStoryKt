@@ -12,7 +12,7 @@ data class NewsResponseModel(
 
     @Keep
     data class ArticleModel(
-        val author: String = "",
+        val author: String,
         val title: String = "",
         val description: String = "",
         val url: String = "",

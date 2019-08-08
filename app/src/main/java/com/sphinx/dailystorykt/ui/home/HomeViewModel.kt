@@ -1,9 +1,12 @@
 package com.sphinx.dailystorykt.ui.home
 
+import androidx.lifecycle.MutableLiveData
 import com.sphinx.dailystorykt.data.DataManager
+import com.sphinx.dailystorykt.data.NewsResponseModel
 import com.sphinx.dailystorykt.rxproviders.AppSchedulerProvider
 import com.sphinx.dailystorykt.ui.base.BaseViewModel
 import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 /**
@@ -13,17 +16,13 @@ class HomeViewModel @Inject constructor(
     private val view: HomeView,
     dataManager: DataManager,
     schedulerProvider: AppSchedulerProvider
-) : BaseViewModel(dataManager = dataManager,schedulerProvider = schedulerProvider) {
+) : BaseViewModel(dataManager = dataManager, schedulerProvider = schedulerProvider) {
 
-//    private lateinit var trendingList : MutableList<NewsResponseModel.ArticleModel>
-//    private lateinit var topList : MutableList<NewsResponseModel.ArticleModel>
+    private var trendingList = MutableLiveData<List<NewsResponseModel.ArticleModel>>()
+    private var topList = MutableLiveData<List<NewsResponseModel.ArticleModel>>()
 
-
-    //i dont like livedate since it exposes states of the class / viewmodel by making
-    //it public so activity can observe, but it wont crash as live data will not emit
-    //to destroyed objects.
     private fun getNytTrendingnews() {
-        compositeDisposable.add(dataManager.doNytRecentApiCall()
+        compositeDisposable.add(dataManager.doNytTrendingApiCall()
             .subscribeOn(schedulerProvider.io())
             .flatMap { response ->
                 Observable
@@ -32,10 +31,9 @@ class HomeViewModel @Inject constructor(
                     .toList()
             }
             .observeOn(schedulerProvider.ui())
-            .subscribe({
-                    list -> view.resetTrendingListAdapter(list) //now here we can use live data,
-                //check if using live data we can show toast and other ui so no need to have a view interface
-            },{
+            .subscribe({ list ->
+                trendingList.setValue(list)
+            }, {
                 //error
                 view.notify("error")
             })
@@ -45,10 +43,17 @@ class HomeViewModel @Inject constructor(
     fun getNYTRecentNews() {
         compositeDisposable.add(dataManager.doNytRecentApiCall()
             .subscribeOn(schedulerProvider.io())
+            .flatMap { response ->
+                Observable
+                    .fromIterable(response.articles)
+                    .filter { article -> article.urlToImage.isNotEmpty() }
+                    .toList()
+            }
             .observeOn(schedulerProvider.ui())
-            .subscribe({
-                response -> view.resetTrendingListAdapter(response.articles)
+            .subscribe({ list ->
+                topList.setValue(list)
             }, {
+                //error
                 view.notify("error")
             })
         )
@@ -57,10 +62,17 @@ class HomeViewModel @Inject constructor(
     fun getCNNTrendingNews() {
         compositeDisposable.add(dataManager.doCnnTrendingApiCall()
             .subscribeOn(schedulerProvider.io())
+            .flatMap { response ->
+                Observable
+                    .fromIterable(response.articles)
+                    .filter { article -> article.urlToImage.isNotEmpty() }
+                    .toList()
+            }
             .observeOn(schedulerProvider.ui())
-            .subscribe({
-                    response -> view.resetTrendingListAdapter(response.articles)
+            .subscribe({ list ->
+                trendingList.setValue(list)
             }, {
+                //error
                 view.notify("error")
             })
         )
@@ -69,10 +81,17 @@ class HomeViewModel @Inject constructor(
     fun getCNNRecentNews() {
         compositeDisposable.add(dataManager.doCnnRecentApiCall()
             .subscribeOn(schedulerProvider.io())
+            .flatMap { response ->
+                Observable
+                    .fromIterable(response.articles)
+                    .filter { article -> article.urlToImage.isNotEmpty() }
+                    .toList()
+            }
             .observeOn(schedulerProvider.ui())
-            .subscribe({
-                    response -> view.resetTrendingListAdapter(response.articles)
+            .subscribe({ list ->
+                topList.setValue(list)
             }, {
+                //error
                 view.notify("error")
             })
         )
@@ -81,10 +100,17 @@ class HomeViewModel @Inject constructor(
     fun getBBCTrendingNews() {
         compositeDisposable.add(dataManager.doBbcTrendingApiCall()
             .subscribeOn(schedulerProvider.io())
+            .flatMap { response ->
+                Observable
+                    .fromIterable(response.articles)
+                    .filter { article -> article.urlToImage.isNotEmpty() }
+                    .toList()
+            }
             .observeOn(schedulerProvider.ui())
-            .subscribe({
-                    response -> view.resetTrendingListAdapter(response.articles)
+            .subscribe({ list ->
+                trendingList.setValue(list)
             }, {
+                //error
                 view.notify("error")
             })
         )
@@ -93,12 +119,24 @@ class HomeViewModel @Inject constructor(
     fun getBBCRecentNews() {
         compositeDisposable.add(dataManager.doBbcRecentApiCall()
             .subscribeOn(schedulerProvider.io())
+            .flatMap { response ->
+                Observable
+                    .fromIterable(response.articles)
+                    .filter { article -> article.urlToImage.isNotEmpty() }
+                    .toList()
+            }
             .observeOn(schedulerProvider.ui())
-            .subscribe({
-                    response -> view.resetTrendingListAdapter(response.articles)
+            .subscribe({ list ->
+                topList.setValue(list)
             }, {
+                //error
                 view.notify("error")
             })
         )
     }
+
+    fun getTrendingList(): MutableLiveData<List<NewsResponseModel.ArticleModel>> = trendingList
+
+    fun getTopList(): MutableLiveData<List<NewsResponseModel.ArticleModel>> = topList
+
 }

@@ -1,6 +1,5 @@
 package com.sphinx.dailystorykt.data
 
-import android.content.Context
 import com.sphinx.dailystorykt.data.remote.ApiHelper
 import io.reactivex.Single
 import javax.inject.Inject
@@ -8,7 +7,6 @@ import javax.inject.Singleton
 
 @Singleton
 class AppDataManager @Inject constructor(
-    private val context: Context,
     private val apiHelper: ApiHelper
 ) : DataManager {
 

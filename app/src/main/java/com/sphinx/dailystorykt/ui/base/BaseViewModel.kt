@@ -8,16 +8,6 @@ import io.reactivex.disposables.CompositeDisposable
 abstract class BaseViewModel(
     val dataManager: DataManager,
     val schedulerProvider: AppSchedulerProvider
-) : ViewModel() {
-
+) {
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
-
-    init {
-
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.dispose()
-    }
 }

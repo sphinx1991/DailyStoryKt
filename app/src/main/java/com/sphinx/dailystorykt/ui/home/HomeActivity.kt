@@ -1,6 +1,7 @@
 package com.sphinx.dailystorykt.ui.home
 
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.sphinx.dailystorykt.BR
 import com.sphinx.dailystorykt.R
 import com.sphinx.dailystorykt.data.NewsResponseModel
@@ -18,38 +19,25 @@ import javax.inject.Inject
  */
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeView {
 
+    @Inject lateinit var mHomeViewModel: HomeViewModel
+
     private val topNewsListAdapter = TopNewsListAdapter()
     private val trendingNewsListAdapter = TrendingNewsListAdapter()
 
-    @Inject lateinit var mHomeViewModel: HomeViewModel
-
-
-    override fun resetTrendingListAdapter(articles: List<NewsResponseModel.ArticleModel>?) {
-        topNewsListAdapter.apply {
-            setList(articles)
-            notifyDataSetChanged()
-        }
-    }
-
-    override fun resetTopListAdapter(articles: List<NewsResponseModel.ArticleModel>?) {
-        trendingNewsListAdapter.apply {
-            setList(articles)
-            notifyDataSetChanged()
-        }
-    }
-
-
-    override fun openSomeActivity() {
+    override fun openInfoActivity(articleModel: NewsResponseModel.ArticleModel) {
         startActivity<InfoActivity>(
-            "article" to "NewsResponseModel.ArticleModel" as Serializable
+            "article" to articleModel as Serializable
         )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        subscribeToLiveData()
+        mHomeViewModel.compositeDisposable.add(topNewsListAdapter.getOnClickSubject()
+            .subscribe { data ->
+                openInfoActivity(data)
+            })
     }
-
 
     override fun getLayoutId(): Int {
         return R.layout.activity_home
@@ -61,6 +49,18 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeVie
 
     override fun getViewModel(): HomeViewModel {
         return mHomeViewModel
+    }
+
+    private fun subscribeToLiveData() {
+        mHomeViewModel.getTrendingList().observe(this, Observer { articles ->
+            trendingNewsListAdapter.setList(articles)
+//            getViewDataBinding().rvTrending.scrollToPosition(0)
+        })
+        mHomeViewModel.getTopList().observe(this, Observer { articles ->
+            topNewsListAdapter.setList(articles)
+//            getViewDataBinding().rvToday.scrollToPosition(0)
+        })
+
     }
 
 }
