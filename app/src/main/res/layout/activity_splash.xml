@@ -7,11 +7,11 @@
 
         <variable
             name="splashViewModel"
-            type="com.ar.sphinx.dailystory.ui.splash.SplashViewModel" />
+            type="com.sphinx.dailystorykt.ui.splash.SplashViewModel" />
 
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -72,6 +72,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

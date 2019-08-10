@@ -15,8 +15,7 @@ import javax.inject.Inject
  */
 class InfoActivity : BaseActivity<ActivityInfoBinding, InfoViewModel>(), InfoView {
 
-    @Inject
-    private lateinit var mInfoViewModel: InfoViewModel
+    @Inject lateinit var mInfoViewModel: InfoViewModel
     private lateinit var mBinding: ActivityInfoBinding
 
     private val articleModel: NewsResponseModel.ArticleModel by lazy {

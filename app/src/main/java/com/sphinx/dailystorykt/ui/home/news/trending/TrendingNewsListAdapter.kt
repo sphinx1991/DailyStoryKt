@@ -4,11 +4,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.sphinx.dailystorykt.R
 import com.sphinx.dailystorykt.RecyclerViewBindingAdapter
-import com.sphinx.dailystorykt.data.DataManager
 import com.sphinx.dailystorykt.data.NewsResponseModel
 import com.sphinx.dailystorykt.databinding.LayoutTodayBinding
-import com.sphinx.dailystorykt.rxproviders.AppSchedulerProvider
 import com.sphinx.dailystorykt.ui.home.news.NewsViewModel
+import io.reactivex.subjects.PublishSubject
 import org.jetbrains.anko.*
 
 /**
@@ -16,13 +15,21 @@ import org.jetbrains.anko.*
  */
 class TrendingNewsListAdapter : RecyclerViewBindingAdapter<LayoutTodayBinding>() {
 
-    private var topNewsList : List<NewsResponseModel.ArticleModel> = emptyList()
-//    private val dataMapper : TopNewsDataMapper()
+    private var trendingList : List<NewsResponseModel.ArticleModel> = emptyList()
+    private val onClickSubject = PublishSubject.create<NewsResponseModel.ArticleModel>()
+
+    override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewPlaceHolder<LayoutTodayBinding> {
+        val viewHolder = ViewPlaceHolder(onCreateViewBinding(parent, position))
+        viewHolder.itemView.onClick {
+            onClickSubject.onNext(trendingList[position])
+        }
+        return viewHolder
+    }
 
     override fun onCreateViewBinding(parent: ViewGroup, viewType: Int): LayoutTodayBinding {
         return DataBindingUtil.inflate(
             parent.context.layoutInflater,
-            R.layout.layout_today,
+            R.layout.layout_trending,
             parent,
             false
         )
@@ -30,14 +37,18 @@ class TrendingNewsListAdapter : RecyclerViewBindingAdapter<LayoutTodayBinding>()
 
     override fun onBindView(viewBinding: LayoutTodayBinding, position: Int) {
         viewBinding.apply {
-            newsViewModel = NewsViewModel(topNewsList[position])
+            newsViewModel = NewsViewModel(trendingList[position])
         }
     }
 
-    override fun getItemCount() = topNewsList.size
+    override fun getItemCount() = trendingList.size
 
     fun setList(list: List<NewsResponseModel.ArticleModel>?) {
-        topNewsList = list ?: emptyList()
+        trendingList = list ?: emptyList()
+    }
+
+    fun getOnClickSubject(): PublishSubject<NewsResponseModel.ArticleModel> {
+        return onClickSubject
     }
 
 }

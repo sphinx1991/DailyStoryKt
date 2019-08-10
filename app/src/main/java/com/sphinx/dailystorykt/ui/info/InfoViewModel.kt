@@ -27,10 +27,10 @@ class InfoViewModel @Inject constructor(
         private val readableDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.US)
     }
 
-    private var heading: ObservableField<String> = ObservableField()
-    private var date: ObservableField<String> = ObservableField()
-    private var imgUrl: ObservableField<String> = ObservableField()
-    private var description: ObservableField<String> = ObservableField()
+    var heading: ObservableField<String> = ObservableField()
+    var date: ObservableField<String> = ObservableField()
+    var imgUrl: ObservableField<String> = ObservableField()
+    var description: ObservableField<String> = ObservableField()
 
     fun setData(data: NewsResponseModel.ArticleModel) {
 

@@ -40,7 +40,7 @@ ext {
     gsonVersion = '2.8.5'
     glideVersion = '4.8.0'
     roomDatabase = '2.0.0-rc01'
-    dagger2Version = '2.11'
+    dagger2Version = '2.15'
     rxjava2Version = '2.0.6'
     rxandroidVersion = '2.0.2'
     timberVersion = '4.5.1'

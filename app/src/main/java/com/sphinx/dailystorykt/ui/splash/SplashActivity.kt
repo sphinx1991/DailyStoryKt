@@ -8,10 +8,11 @@ import com.sphinx.dailystorykt.ui.base.BaseActivity
 import com.sphinx.dailystorykt.ui.home.HomeActivity
 
 import org.jetbrains.anko.*
+import javax.inject.Inject
 
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(), SplashView {
 
-    private lateinit var mSplashViewModel: SplashViewModel
+    @Inject lateinit var mSplashViewModel: SplashViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

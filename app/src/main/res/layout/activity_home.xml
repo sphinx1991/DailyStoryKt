@@ -9,16 +9,16 @@
 
         <variable
             name="homeViewModel"
-            type="com.ar.sphinx.dailystory.ui.home.HomeViewModel" />
+            type="com.sphinx.dailystorykt.ui.home.HomeViewModel" />
 
     </data>
 
-    <android.support.v4.widget.DrawerLayout
+    <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.design.widget.NavigationView
+        <com.google.android.material.navigation.NavigationView
             android:id="@+id/nv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -26,26 +26,26 @@
             app:headerLayout="@layout/nav_header"
             app:menu="@menu/navigation_menu">
 
-        </android.support.design.widget.NavigationView>
+        </com.google.android.material.navigation.NavigationView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.design.widget.AppBarLayout
+            <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:elevation="5dp">
 
-                <android.support.v7.widget.Toolbar
+                <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbarHome"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:theme="@style/ToolBarStyle" />
-            </android.support.design.widget.AppBarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -101,7 +101,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView11">
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_trending"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:padding="40dp"
-                        android:visibility="@{homeViewModel.isLoading ? View.VISIBLE: View.GONE}"
+                        android:visibility="invisible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -151,7 +151,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView12">
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_today"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -172,7 +172,7 @@
                         android:layout_marginTop="8dp"
                         android:indeterminateOnly="true"
                         android:padding="50dp"
-                        android:visibility="@{homeViewModel.isLoading ? View.VISIBLE: View.GONE}" />
+                        android:visibility="invisible" />
 
                 </FrameLayout>
 
@@ -186,10 +186,10 @@
                     android:entries="@array/newslist"
                     app:layout_constraintEnd_toStartOf="@+id/imageView8"
                     app:layout_constraintTop_toTopOf="parent" />
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
-    </android.support.v4.widget.DrawerLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 </layout>

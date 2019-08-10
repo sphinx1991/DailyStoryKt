@@ -21,7 +21,7 @@ class HomeViewModel @Inject constructor(
     private var trendingList = MutableLiveData<List<NewsResponseModel.ArticleModel>>()
     private var topList = MutableLiveData<List<NewsResponseModel.ArticleModel>>()
 
-    private fun getNytTrendingnews() {
+    fun getNytTrendingNews() {
         compositeDisposable.add(dataManager.doNytTrendingApiCall()
             .subscribeOn(schedulerProvider.io())
             .flatMap { response ->
